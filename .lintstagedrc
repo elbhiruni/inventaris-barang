@@ -1,6 +1,5 @@
 {
-    "*.php": [
-        "./vendor/bin/pint --parallel",
-        "./vendor/bin/phpstan analyze"
-    ]
+    "*.{js,ts,mjs,cjs}": "vp lint --fix",
+    "*.{js,ts,mjs,cjs,css,scss,postcss,md,json.yml}": "vp fmt --no-error-on-unmatched-pattern",
+    "*.php": ["./vendor/bin/pint --parallel", "./vendor/bin/phpstan analyze"]
 }
