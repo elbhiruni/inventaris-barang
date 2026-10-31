@@ -1,0 +1,6 @@
+{
+    "*.php": [
+        "./vendor/bin/pint --parallel",
+        "./vendor/bin/phpstan analyze"
+    ]
+}
