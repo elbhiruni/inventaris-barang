@@ -1,18 +1,21 @@
 <?php
 
 use App\Concerns\ProfileValidationRules;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Flux\Flux;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Title('Profile settings')] class extends Component {
+// @phpstan-ignore expr.resultUnused
+new #[Title('Profile settings')] class extends Component
+{
     use ProfileValidationRules;
 
     public string $name = '';
+
     public string $email = '';
 
     /**
@@ -52,7 +55,7 @@ new #[Title('Profile settings')] class extends Component {
         $user = Auth::user();
 
         if ($user->hasVerifiedEmail()) {
-            $this->redirectIntended(default: route('dashboard', absolute: false));
+            $this->redirectIntended(default: route('product', absolute: false));
 
             return;
         }
@@ -71,8 +74,9 @@ new #[Title('Profile settings')] class extends Component {
     #[Computed]
     public function showDeleteUser(): bool
     {
-        return ! Auth::user() instanceof MustVerifyEmail
-            || (Auth::user() instanceof MustVerifyEmail && Auth::user()->hasVerifiedEmail());
+        $user = Auth::user();
+
+        return ! $user instanceof MustVerifyEmail || $user->hasVerifiedEmail();
     }
 }; ?>
 
