@@ -31,9 +31,9 @@ new class extends Component
 
     public ?int $category_id = null;
 
-    public ?int $price = 0;
+    public int $price = 0;
 
-    public ?int $stock_quantity = 0;
+    public int $stock_quantity = 0;
 
     public function boot(): void
     {
