@@ -55,7 +55,7 @@ new #[Title('Profile settings')] class extends Component
         $user = Auth::user();
 
         if ($user->hasVerifiedEmail()) {
-            $this->redirectIntended(default: route('product', absolute: false));
+            $this->redirectIntended(default: route('transaction', absolute: false));
 
             return;
         }
