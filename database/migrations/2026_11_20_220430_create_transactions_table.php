@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('customer_name')->nullable();
             $table->datetime('transaction_date');
-            $table->integer('total_amount');
+            $table->unsignedInteger('total_amount')->default(0);
 
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

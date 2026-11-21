@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('transaction_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('product_id')->nullable()->constrained()->nullOnDelete();
             $table->string('product_name')->nullable();
-            $table->unsignedInteger('quantity');
-            $table->integer('subtotal');
+            $table->unsignedSmallInteger('quantity')->default(0);
+            $table->unsignedInteger('subtotal')->default(0);
 
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
