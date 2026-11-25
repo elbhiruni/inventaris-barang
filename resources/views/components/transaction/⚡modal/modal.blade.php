@@ -37,6 +37,7 @@
                             <flux:table.column>Product</flux:table.column>
                             <flux:table.column align="center">Quantity</flux:table.column>
                             <flux:table.column align="right">Subtotal</flux:table.column>
+                            <flux:table.column align="center">Aksi</flux:table.column>
                         </flux:table.columns>
 
                         <flux:table.rows>
@@ -44,15 +45,35 @@
                                 <flux:table.row :key="$loop->index">
                                     <flux:table.cell align="center">{{ $loop->index + 1 }}</flux:table.cell>
                                     <flux:table.cell>{{ $item['product_name'] }}</flux:table.cell>
-                                    <flux:table.cell align="center">{{ $item['quantity'] }}</flux:table.cell>
+                                    <flux:table.cell align="center">
+                                        @if ($modal['action'] === 'store')
+                                            <div class="flex items-center justify-center gap-1">
+                                                <flux:button size="xs" variant="ghost" icon="minus"
+                                                    :disabled="$item['quantity'] <= 1"
+                                                    wire:click="changeQuantity({{ $loop->index }}, -1)" />
+                                                <span>{{ $item['quantity'] }}</span>
+                                                <flux:button size="xs" variant="ghost" icon="plus"
+                                                    :disabled="$item['quantity'] >= ($this->productStocks[$item['product_id']] ?? 0)"
+                                                    wire:click="changeQuantity({{ $loop->index }}, 1)" />
+                                            </div>
+                                        @else
+                                            {{ $item['quantity'] }}
+                                        @endif
+                                    </flux:table.cell>
                                     <flux:table.cell align="right">
                                         Rp {{ Number::format($item['subtotal'], locale: 'id') }}
+                                    </flux:table.cell>
+                                    <flux:table.cell align="center">
+                                        @if ($modal['action'] === 'store')
+                                            <flux:button size="xs" variant="ghost" color="red" icon="trash"
+                                                wire:click="removeProduct({{ $loop->index }})" />
+                                        @endif
                                     </flux:table.cell>
                                 </flux:table.row>
                             @endforeach
 
                             <flux:table.row>
-                                <flux:table.cell colspan="3">Total</flux:table.cell>
+                                <flux:table.cell colspan="4">Total</flux:table.cell>
                                 <flux:table.cell align="right">
                                     Rp {{ Number::format($this->totalAmount, locale: 'id') }}
                                 </flux:table.cell>
